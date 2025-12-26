@@ -30,12 +30,13 @@ export default function MessageList({ messages, isTyping }) {
                 animate-messageIn
                 ${
                   isUser
-                    ? "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-800"
+                    ? "bg-indigo-500/90 text-white"
+                    : "bg-white/10 text-slate-100 border border-white/10"
                 }
               `}
-              dangerouslySetInnerHTML={{ __html: msg.content }}
-            />
+            >
+              {msg.content}
+            </div>
           </div>
         );
       })}

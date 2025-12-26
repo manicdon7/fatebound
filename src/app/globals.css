@@ -41,6 +41,42 @@ body {
   min-height: 100vh;
 }
 
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 700ms ease-out both;
+}
+
+@keyframes orbFloat {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.orb-float {
+  animation: orbFloat 8s ease-in-out infinite;
+}
+
+.orb-float-slow {
+  animation: orbFloat 12s ease-in-out infinite;
+}
+
 /* Link Styles */
 a {
   color: inherit;

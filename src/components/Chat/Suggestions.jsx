@@ -16,10 +16,10 @@ export default function Suggestions({ suggestions, onSelect, disabled }) {
             px-3 py-1.5
             text-sm
             rounded-full
-            border border-slate-300
-            text-slate-700
-            bg-white
-            hover:bg-slate-100
+            border border-white/10
+            text-slate-200
+            bg-white/5
+            hover:bg-white/10
             transition
             disabled:opacity-40
           "

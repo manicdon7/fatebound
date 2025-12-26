@@ -22,10 +22,11 @@ export default function MessageInput({ onSend, disabled }) {
         className="
           flex-1 px-4 py-3
           rounded-lg
-          border border-slate-300
-          bg-white
-          text-slate-800
-          focus:outline-none focus:ring-2 focus:ring-slate-400
+          border border-white/10
+          bg-black/30
+          text-slate-100
+          placeholder:text-slate-400
+          focus:outline-none focus:ring-2 focus:ring-indigo-400/60
           transition
         "
       />
@@ -35,9 +36,9 @@ export default function MessageInput({ onSend, disabled }) {
         className="
           px-5 py-3
           rounded-lg
-          bg-slate-900 text-white
+          bg-indigo-500/90 text-white
           font-medium
-          hover:bg-slate-800
+          hover:bg-indigo-500
           disabled:opacity-40
           transition
         "

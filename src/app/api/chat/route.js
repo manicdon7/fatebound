@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { callOpenRouter } from "@/lib/openrouter";
-import { SYSTEM_PROMPT } from "@/lib/storyPrompt";
+import { generateStoryTurn } from "@/lib/storyEngine";
 
 export const runtime = "nodejs";
 
@@ -16,43 +15,7 @@ export async function POST(req) {
       );
     }
 
-    // Prepare messages for OpenRouter
-    const openRouterMessages = [
-      { role: "system", content: SYSTEM_PROMPT },
-      ...messages.map((m) => ({
-        role: m.role,
-        content: m.content,
-      })),
-    ];
-
-    const aiResponse = await callOpenRouter(openRouterMessages);
-
-    // Parse response into story & suggestions
-    let story = "";
-    let suggestions = [];
-
-    if (aiResponse) {
-      const storyMatch = aiResponse.match(
-        /STORY:[\s\S]*?(SUGGESTIONS:|$)/i
-      );
-
-      if (storyMatch) {
-        story = storyMatch[0]
-          .replace(/STORY:/i, "")
-          .replace(/SUGGESTIONS:/i, "")
-          .trim();
-      }
-
-      const suggestionMatch = aiResponse.match(/SUGGESTIONS:[\s\S]*$/i);
-
-      if (suggestionMatch) {
-        suggestions = suggestionMatch[0]
-          .replace(/SUGGESTIONS:/i, "")
-          .split("\n")
-          .map((s) => s.replace(/^\d+\.\s*/, "").trim())
-          .filter(Boolean);
-      }
-    }
+    const { story, suggestions } = await generateStoryTurn(messages);
 
     return NextResponse.json({ story, suggestions });
   } catch (err) {

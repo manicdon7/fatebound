@@ -7,7 +7,7 @@ export default function TypingIndicator() {
       <div className="
         px-4 py-2
         text-sm
-        text-slate-500
+        text-slate-300
         italic
         animate-pulse
       ">

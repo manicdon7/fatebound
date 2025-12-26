@@ -22,7 +22,8 @@ export default function ChatUI() {
   const [loading, setLoading] = useState(false);
 
   const handleSend = async (input) => {
-    if (!input.trim() || loading) return;
+    const trimmed = input.trim();
+    if (!trimmed || loading) return;
 
     setLoading(true);
     setSuggestions([]);
@@ -30,7 +31,7 @@ export default function ChatUI() {
     // Build next message list safely
     const nextMessages = [
       ...messages,
-      { role: "user", content: input },
+      { role: "user", content: trimmed },
     ];
 
     setMessages(nextMessages);
@@ -54,14 +55,15 @@ export default function ChatUI() {
         { role: "assistant", content: data.story },
       ]);
 
-      setSuggestions(data.suggestions || []);
+      setSuggestions((data.suggestions || []).slice(0, 3));
     } catch (err) {
       console.error(err);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "The world falters. Try again.",
+          content:
+            "The world falters, as if something beyond the veil interrupted the tale. Try again.",
         },
       ]);
     } finally {
@@ -70,30 +72,36 @@ export default function ChatUI() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-12 rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden">
-      {/* Header */}
-      <div className="px-6 py-5 border-b border-slate-200">
-        <h1 className="text-xl font-semibold tracking-tight text-slate-900">
-          Fatebound
-        </h1>
-        <p className="text-sm text-slate-500 mt-1">
-          An interactive story where choices shape the ending.
-        </p>
-      </div>
+    <div className="w-full h-full">
+      <div className="mx-auto w-full max-w-4xl h-[calc(100vh-4rem)] px-4 py-6 sm:px-6">
+        <div className="h-full rounded-3xl border border-white/10 bg-black/30 backdrop-blur-xl shadow-2xl overflow-hidden">
+          <div className="px-6 py-5 border-b border-white/10">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h1 className="text-xl font-semibold tracking-tight text-white">
+                  Fatebound
+                </h1>
+                <p className="text-sm text-slate-300 mt-1">
+                  An interactive story where choices shape the ending.
+                </p>
+              </div>
+              <div className="text-xs text-slate-400 mt-1">MVP</div>
+            </div>
+          </div>
 
-      {/* Chat */}
-      <div className="h-[60vh] flex flex-col">
-        <MessageList messages={messages} isTyping={loading} />
-      </div>
+          <div className="h-[calc(100%-76px)] flex flex-col">
+            <MessageList messages={messages} isTyping={loading} />
 
-      {/* Input */}
-      <div className="px-5 py-4 border-t border-slate-200 bg-slate-50">
-        <Suggestions
-          suggestions={suggestions}
-          onSelect={handleSend}
-          disabled={loading}
-        />
-        <MessageInput onSend={handleSend} disabled={loading} />
+            <div className="px-5 py-4 border-t border-white/10 bg-black/20">
+              <Suggestions
+                suggestions={suggestions}
+                onSelect={handleSend}
+                disabled={loading}
+              />
+              <MessageInput onSend={handleSend} disabled={loading} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
