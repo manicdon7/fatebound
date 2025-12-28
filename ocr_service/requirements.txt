@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+python-multipart
+numpy<2.0.0
+Pillow<10.0.0
+opencv-python-headless
+easyocr==1.6.2
+pdf2image
